@@ -66,6 +66,7 @@ $(function() {
         }else{
           $titleLogin.html('The user "'+ username + '" already exists!');
           $usernameInput.val(null);
+          username = null;
         }
       })
     }

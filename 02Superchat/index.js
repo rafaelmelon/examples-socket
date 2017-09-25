@@ -32,9 +32,6 @@ io.on('connection', function (socket) {
 
   // Condition User exist
   socket.on('exists user', function(username, cb){
-
-
-
     if(usernames.includes(username)) {
       console.log('User already exists!');
       cb(false);
