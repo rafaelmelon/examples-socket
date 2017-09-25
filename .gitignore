@@ -1,4 +1,6 @@
 node_modules/
 npm-debug.log
-/01Chat/node_modules
+
 /00Contador/node_modules
+/01Chat/node_modules
+/02Superchat/node_modules
