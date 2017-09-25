@@ -15,7 +15,7 @@ server.listen(port, function () {
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Chatroom
-
+var usernames = [];
 var numUsers = 0;
 
 io.on('connection', function (socket) {
@@ -29,6 +29,21 @@ io.on('connection', function (socket) {
       message: data
     });
   });
+
+  // Condition User exist
+  socket.on('exists user', function(username, cb){
+
+
+
+    if(usernames.includes(username)) {
+      console.log('User already exists!');
+      cb(false);
+    }else{
+      console.log('User dont exist!');
+      usernames.push(username)
+      cb(true);
+    }
+  })
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {
