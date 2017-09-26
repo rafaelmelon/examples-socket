@@ -11,7 +11,7 @@
     <canvas id="canvas" width="720" height="720"></canvas>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      (function(d, io){
+      (function(d, w, n, io){
         'use strict'
 
         var io = io(),
@@ -20,24 +20,53 @@
             canvas = d.querySelector('#canvas'),
             context = canvas.getContext('2d')
 
-        navigator.streaming = (
-          navigator.getUserMedia ||
-          navigator.webkitGetUserMedia ||
-          navigator.mozGetUserMedia ||
-          navigator.msGetUserMedia
+        n.streaming = (
+          n.getUserMedia ||
+          n.webkitGetUserMedia ||
+          n.mozGetUserMedia ||
+          n.msGetUserMedia
         )
 
-        navigator.streaming({
+        n.streaming({
           video: true,
           audio: false
         }, function(stream){
           startCamera = true
-          video.src = window.URL.createObjectURL(stream)
+          video.src = w.URL.createObjectURL(stream)
         }, function(err){
           alert('Error al acceder a la cámara web: '+ err)
         })
 
-      })(document, io)
+        w.playVideo = (function(cb){
+          return w.requestAnimationFrame ||
+          w.webkitRequestAnimationFrame ||
+          w.mozRequestAnimationFrame ||
+          w.msRequestAnimationFrame ||
+          function(cb){
+            w.setTimeOut(cb, 1000/100)
+          }
+        })()
+
+        function streamVideo(context, canvas, video){
+          var outputStream = canvas.toDataURL('image/jpeg', .2)
+          context.drawImage(video, 0, 0)
+
+          if(startCamera){
+            io.emit('streaming', outputStream)
+          }
+
+          playVideo(function(){
+            streamVideo(context, canvas, video)
+          })
+        }
+
+        w.addEventListener('load', function(){
+          video.autoplay = true
+          video.style.display = 'none'
+          streamVideo(context, canvas, video)
+        })
+
+      })(document, window, navigator, io)
     </script>
   </body>
 </html>
