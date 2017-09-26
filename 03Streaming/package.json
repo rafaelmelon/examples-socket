@@ -1,0 +1,24 @@
+{
+  "name": "streaming",
+  "version": "0.0.1",
+  "description": "Creación de Video Streaming con Express, Socket.IO y API's de Javascript",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "Express",
+    "Socket.IO",
+    "RequestAnimationFrame",
+    "GetUserMedia",
+    "Canvas",
+    "Window.URL",
+    "Streaming"
+  ],
+  "author": "Rafael Melón",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.5",
+    "socket.io": "^2.0.3"
+  }
+}
